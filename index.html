@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<title>My Space — Personal Hub</title>
+<style>
+:root{--bg:#0b1220;--panel:#121d2e;--panel2:#172438;--line:#26364c;--text:#edf3fb;--muted:#9aabc0;--accent:#8dd6c6;--accent2:#f0c987;--danger:#f28f91;--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#1a3040 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}button{cursor:pointer}
+.shell{max-width:1180px;margin:auto;padding:22px}
+header{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 0 24px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:.2px}.mark{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,var(--accent),#7da7d8);display:grid;place-items:center;color:#10202a;font-weight:900}
+nav{display:flex;gap:7px;flex-wrap:wrap}nav a,.toplink{padding:9px 12px;border:1px solid transparent;border-radius:11px;color:var(--muted);font-size:13px}nav a:hover,.toplink:hover{border-color:var(--line);background:var(--panel);color:var(--text)}
+.hero{display:grid;grid-template-columns:1.5fr .8fr;gap:18px;margin:10px 0 22px}.panel{background:linear-gradient(145deg,rgba(24,38,57,.96),rgba(16,27,43,.96));border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:0 14px 40px #0002}
+.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase}.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:10px 0}.hero p{color:var(--muted);max-width:650px;margin:0 0 18px}.actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 14px;border-radius:11px}.btn.primary{background:var(--accent);color:#10252a;border-color:var(--accent);font-weight:750}.btn:hover{filter:brightness(1.1)}.quick{display:flex;flex-direction:column;justify-content:space-between;gap:16px}.quick h3{margin:4px 0}.quick p{color:var(--muted);font-size:13px;margin:0}.field{display:flex;flex-direction:column;gap:6px;margin-top:10px}.field label{font-size:12px;color:var(--muted)}input,textarea{width:100%;background:#0c1625;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 11px;outline:none}input:focus,textarea:focus{border-color:var(--accent)}textarea{resize:vertical;min-height:90px}
+.section{scroll-margin-top:18px;margin:22px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:12px}.section-head h2{font-size:21px;margin:0}.section-head p{color:var(--muted);font-size:13px;margin:3px 0 0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{background:#0e1929;border:1px solid var(--line);padding:14px;border-radius:14px}.stat strong{display:block;font-size:23px}.stat span{font-size:12px;color:var(--muted)}
+.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.row input{flex:1}.muted{color:var(--muted)}.small{font-size:12px}.calendar-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.calendar-top h3{margin:0;font-size:17px}.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.dayname,.day{padding:8px 2px;text-align:center;font-size:12px}.dayname{color:var(--muted)}.day{border:1px solid transparent;background:#0d1827;border-radius:9px;min-height:42px;color:var(--text)}.day:hover{border-color:var(--accent)}.day.dim{opacity:.3}.day.today{outline:1px solid var(--accent)}.day.selected{background:var(--accent);color:#10252a;font-weight:800}.day.has-note:after{content:"";display:block;width:4px;height:4px;border-radius:50%;background:var(--accent2);margin:2px auto 0}
+.note-list,.task-list{display:flex;flex-direction:column;gap:8px}.item{display:flex;align-items:flex-start;gap:10px;background:#0d1827;border:1px solid var(--line);border-radius:12px;padding:11px}.item-main{flex:1;min-width:0}.item-main strong{display:block;font-size:14px}.item-main p{white-space:pre-wrap;color:var(--muted);font-size:12px;margin:3px 0 0;overflow-wrap:anywhere}.iconbtn{border:0;background:transparent;color:var(--muted);padding:3px 6px}.iconbtn:hover{color:var(--danger)}.task{align-items:center}.task input[type=checkbox]{width:17px;height:17px;accent-color:var(--accent);flex:0 0 auto}.task.done .item-main strong{text-decoration:line-through;color:var(--muted)}
+footer{border-top:1px solid var(--line);margin-top:34px;padding:20px 0;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.toast{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#10252a;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:700;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:800px){.hero,.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}header{align-items:flex-start;flex-direction:column}.shell{padding:14px}}
+@media(max-width:460px){.grid3{grid-template-columns:1fr}.panel{padding:16px}.day{min-height:36px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <a class="brand" href="#home"><span class="mark">M</span><span>MY SPACE <span class="muted" style="font-weight:400">/ personal hub</span></span></a>
+  <nav aria-label="Main navigation">
+    <a href="#about">Introduction</a><a href="#planner">Planner</a><a href="#study">Study plan</a><a href="#links">My links</a>
+  </nav>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="panel">
+    <div class="eyebrow" id="greeting">A little space for everything</div>
+    <h1>Welcome to your<br><span style="color:var(--accent)">personal hub.</span></h1>
+    <p>A quiet home base for your notes, dates, study goals, and useful links. Keep it simple, keep it yours.</p>
+    <div class="actions"><a class="btn primary" href="#planner">Open my planner</a><a class="btn" href="#study">View study plan</a></div>
+  </div>
+  <aside class="panel quick" id="links">
+    <div><div class="eyebrow">Quick access</div><h3>Another website</h3><p>Add the title and URL of your other website. Your shortcut will stay saved on this browser.</p></div>
+    <div class="field"><label for="linkTitle">Website title</label><input id="linkTitle" placeholder="e.g. My project dashboard"></div>
+    <div class="field"><label for="linkUrl">Website URL</label><input id="linkUrl" type="url" placeholder="https://example.com"></div>
+    <div class="row"><button class="btn primary" id="saveLink">Save shortcut</button><a class="btn" id="visitLink" href="#" target="_blank" rel="noopener">Open ↗</a></div>
+    <p class="small" id="linkStatus">No shortcut saved yet.</p>
+  </aside>
+</section>
+
+<section class="section" id="about">
+  <div class="section-head"><div><div class="eyebrow">Start here</div><h2>Introduction</h2><p>A personal profile, not a portfolio. Edit this whenever you like.</p></div><button class="btn" id="saveAbout">Save introduction</button></div>
+  <div class="panel grid2">
+    <div><div class="field"><label for="aboutName">What should this site call you?</label><input id="aboutName" placeholder="Your name or nickname"></div>
+      <div class="field"><label for="aboutRole">What are you currently focused on?</label><input id="aboutRole" placeholder="e.g. Electronics Engineering student"></div></div>
+    <div class="field"><label for="aboutText">A short introduction / current priorities</label><textarea id="aboutText" placeholder="A few lines about yourself, what you're working on, and what matters to you."></textarea></div>
+  </div>
+</section>
+
+<section class="section" id="planner">
+  <div class="section-head"><div><div class="eyebrow">Remember & organize</div><h2>Notes and calendar</h2><p>Select a date, write a note, and save it. Notes are stored automatically in this browser.</p></div><span class="small muted" id="saveState">Autosave is on</span></div>
+  <div class="grid2">
+    <div class="panel">
+      <div class="calendar-top"><button class="btn" id="prevMonth" aria-label="Previous month">←</button><h3 id="monthLabel"></h3><button class="btn" id="nextMonth" aria-label="Next month">→</button></div>
+      <div class="cal-grid" id="calendar"></div>
+      <p class="small muted">Dots indicate dates with saved notes. Select any date to view or add notes.</p>
+    </div>
+    <div class="panel">
+      <div class="eyebrow">Selected date</div><h3 id="selectedLabel" style="margin:5px 0 12px"></h3>
+      <div class="field"><label for="noteTitle">Note title</label><input id="noteTitle" placeholder="e.g. Review Chapter 3"></div>
+      <div class="field"><label for="noteBody">Details / reminder</label><textarea id="noteBody" placeholder="Write your note, task, reminder, or plan..."></textarea></div>
+      <div class="row" style="margin-top:10px"><button class="btn primary" id="saveNote">Save note</button><button class="btn" id="clearNote">Clear editor</button></div>
+      <div style="height:1px;background:var(--line);margin:17px 0"></div>
+      <div class="row" style="justify-content:space-between;margin-bottom:8px"><strong>Notes for this date</strong><span class="small muted" id="noteCount"></span></div>
+      <div class="note-list" id="notesList"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="study">
+  <div class="section-head"><div><div class="eyebrow">Make steady progress</div><h2>Study plan</h2><p>Add subjects, topics, or goals. Check them off as you finish.</p></div></div>
+  <div class="grid2">
+    <div class="panel">
+      <div class="field"><label for="studyTitle">Study task / topic</label><input id="studyTitle" placeholder="e.g. Signals and Systems — Fourier Series"></div>
+      <div class="field"><label for="studyWhen">Target date (optional)</label><input id="studyWhen" type="date"></div>
+      <div class="field"><label for="studyDetails">Details (optional)</label><textarea id="studyDetails" placeholder="What do you need to understand or finish?"></textarea></div>
+      <button class="btn primary" id="addStudy" style="margin-top:10px">Add to study plan</button>
+    </div>
+    <div class="panel">
+      <div class="row" style="justify-content:space-between;margin-bottom:12px"><strong>Your study tasks</strong><span class="small muted" id="studyProgress">0 completed</span></div>
+      <div class="task-list" id="studyList"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="extras">
+ <div class="section-head"><div><div class="eyebrow">Small essentials</div><h2>Your hub at a glance</h2></div></div>
+ <div class="grid3">
+  <div class="stat"><strong id="totalNotes">0</strong><span>Saved notes</span></div>
+  <div class="stat"><strong id="totalTasks">0</strong><span>Study tasks</span></div>
+  <div class="stat"><strong id="doneTasks">0%</strong><span>Study plan completed</span></div>
+ </div>
+</section>
+</main>
+<footer><span>MY SPACE · A personal home base</span><span>Your data stays in this browser unless you export or clear it.</span></footer>
+</div>
+<div class="toast" id="toast">Saved</div>
+<script>
+const $ = id => document.getElementById(id);
+const KEY='mySpaceHub_v1';
+const today=new Date(); today.setHours(0,0,0,0);
+let state=load();
+let viewMonth=new Date(today.getFullYear(),today.getMonth(),1);
+let selected=keyDate(today);
+let editingNoteId=null;
+function blank(){return {about:{name:'',role:'',text:''},link:{title:'',url:''},notes:{},study:[]}}
+function load(){try{return {...blank(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){return blank()}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(state));$('saveState').textContent='Saved just now';updateStats()}
+function toast(msg='Saved'){ $('toast').textContent=msg;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1400)}
+function keyDate(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function prettyDate(k){return new Date(k+'T12:00:00').toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'})}
+function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderCalendar(){
+ const y=viewMonth.getFullYear(),m=viewMonth.getMonth(),first=new Date(y,m,1),start=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate();
+ $('monthLabel').textContent=viewMonth.toLocaleDateString(undefined,{month:'long',year:'numeric'});
+ const names=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+ let out=names.map(n=>`<div class="dayname">${n}</div>`).join('');
+ for(let i=0;i<42;i++){let n=i-start+1, d=new Date(y,m,n), valid=n>0&&n<=days,k=keyDate(d),cls='day'+(!valid?' dim':'')+(k===keyDate(today)?' today':'')+(k===selected?' selected':'')+((state.notes[k]||[]).length?' has-note':'');out+=`<button class="${cls}" data-date="${valid?k:''}" ${valid?'':'disabled'}>${valid?n:''}</button>`}
+ $('calendar').innerHTML=out;
+ $('calendar').querySelectorAll('[data-date]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.date){selected=b.dataset.date;editingNoteId=null;clearEditor();renderCalendar();renderNotes()}}));
+}
+function clearEditor(){$('noteTitle').value='';$('noteBody').value='';editingNoteId=null}
+function renderNotes(){
+ $('selectedLabel').textContent=prettyDate(selected);
+ const arr=state.notes[selected]||[];$('noteCount').textContent=arr.length?`${arr.length} note(s)`:'No notes yet';
+ $('notesList').innerHTML=arr.length?arr.map(n=>`<div class="item"><div class="item-main"><strong>${safe(n.title||'Untitled note')}</strong><p>${safe(n.body||'No details')}</p></div><button class="iconbtn" title="Edit note" data-edit="${n.id}">Edit</button><button class="iconbtn" title="Delete note" data-del="${n.id}">×</button></div>`).join(''):'<p class="small muted">Nothing scheduled here yet. Add a note above.</p>';
+ $('notesList').querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{const n=arr.find(x=>x.id===b.dataset.edit);if(n){editingNoteId=n.id;$('noteTitle').value=n.title;$('noteBody').value=n.body}});
+ $('notesList').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{state.notes[selected]=arr.filter(x=>x.id!==b.dataset.del);if(!state.notes[selected].length)delete state.notes[selected];persist();renderNotes();renderCalendar();toast('Note deleted')});
+ updateStats();
+}
+function renderStudy(){
+ const list=state.study;$('studyList').innerHTML=list.length?list.map(t=>`<div class="item task ${t.done?'done':''}"><input type="checkbox" data-check="${t.id}" ${t.done?'checked':''}><div class="item-main"><strong>${safe(t.title)}</strong><p>${t.date?'Target: '+safe(t.date)+' · ':''}${safe(t.details||'')}</p></div><button class="iconbtn" title="Delete task" data-remove="${t.id}">×</button></div>`).join(''):'<p class="small muted">Your study list is empty. Add your first topic to get started.</p>';
+ $('studyList').querySelectorAll('[data-check]').forEach(c=>c.onchange=()=>{const t=list.find(x=>x.id===c.dataset.check);if(t)t.done=c.checked;persist();renderStudy()});
+ $('studyList').querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{state.study=state.study.filter(t=>t.id!==b.dataset.remove);persist();renderStudy();toast('Task removed')});
+ const done=list.filter(t=>t.done).length;$('studyProgress').textContent=`${done} / ${list.length} completed`;updateStats();
+}
+function updateStats(){let n=Object.values(state.notes).reduce((a,b)=>a+b.length,0),t=state.study.length,d=state.study.filter(x=>x.done).length;$('totalNotes').textContent=n;$('totalTasks').textContent=t;$('doneTasks').textContent=(t?Math.round(d/t*100):0)+'%'}
+function renderLink(){ $('linkTitle').value=state.link.title||'';$('linkUrl').value=state.link.url||'';let valid=state.link.url&&/^https?:\/\//i.test(state.link.url);$('visitLink').href=valid?state.link.url:'#';$('visitLink').style.opacity=valid?'1':'.45';$('linkStatus').textContent=valid?`Shortcut saved: ${state.link.title||state.link.url}`:'No valid shortcut saved yet.'}
+function init(){
+ $('aboutName').value=state.about.name||'';$('aboutRole').value=state.about.role||'';$('aboutText').value=state.about.text||'';
+ $('greeting').textContent='A little space for '+(state.about.name||'everything');
+ renderLink();renderCalendar();renderNotes();renderStudy();updateStats();
+}
+$('prevMonth').onclick=()=>{viewMonth.setMonth(viewMonth.getMonth()-1);renderCalendar()};
+$('nextMonth').onclick=()=>{viewMonth.setMonth(viewMonth.getMonth()+1);renderCalendar()};
+$('saveNote').onclick=()=>{let title=$('noteTitle').value.trim(),body=$('noteBody').value.trim();if(!title&&!body){toast('Write something first');return}let arr=state.notes[selected]||[];if(editingNoteId){let n=arr.find(x=>x.id===editingNoteId);if(n){n.title=title;n.body=body}}else arr.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),title,body});state.notes[selected]=arr;persist();clearEditor();renderNotes();renderCalendar();toast('Note saved')};
+$('clearNote').onclick=clearEditor;
+$('saveAbout').onclick=()=>{state.about={name:$('aboutName').value.trim(),role:$('aboutRole').value.trim(),text:$('aboutText').value.trim()};persist();$('greeting').textContent='A little space for '+(state.about.name||'everything');toast('Introduction saved')};
+$('saveLink').onclick=()=>{let url=$('linkUrl').value.trim();if(url&&!/^https?:\/\//i.test(url)){toast('URL must start with https:// or http://');return}state.link={title:$('linkTitle').value.trim(),url};persist();renderLink();toast('Shortcut saved')};
+$('addStudy').onclick=()=>{let title=$('studyTitle').value.trim();if(!title){toast('Add a study topic first');return}state.study.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),title,date:$('studyWhen').value,details:$('studyDetails').value.trim(),done:false});$('studyTitle').value='';$('studyWhen').value='';$('studyDetails').value='';persist();renderStudy();toast('Added to study plan')};
+// Save profile/shortcut drafts when leaving their fields, too.
+['aboutName','aboutRole','aboutText'].forEach(id=>$(id).addEventListener('change',()=>{state.about={name:$('aboutName').value.trim(),role:$('aboutRole').value.trim(),text:$('aboutText').value.trim()};persist()}));
+['linkTitle','linkUrl'].forEach(id=>$(id).addEventListener('change',()=>{let url=$('linkUrl').value.trim();if(!url||/^https?:\/\//i.test(url)){state.link={title:$('linkTitle').value.trim(),url};persist();renderLink()}}));
+window.addEventListener('pagehide',()=>{try{persist()}catch(e){}});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){try{persist()}catch(e){}}});
+init();
+</script>
+</body>
+</html>
